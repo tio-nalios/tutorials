@@ -1,4 +1,5 @@
 from odoo import fields, models, api
+from odoo.exceptions import UserError
 from datetime import timedelta
 
 class EstatePropertyOffer(models.Model):
@@ -36,9 +37,14 @@ class EstatePropertyOffer(models.Model):
             else:
                 offer.validity = 0
 
-    # Set the state of the property to "offer_received" when an offer is created
     @api.model_create_multi
     def create(self, vals_list):
+        for vals in vals_list:
+            property_ = self.env['estate.property'].browse(vals['property_id'])
+            if property_.best_price and vals.get('price', 0) <= property_.best_price:
+                raise UserError(
+                    f"The offer must be higher than the current best offer of {property_.best_price}."
+                )
         offers = super().create(vals_list)
         for offer in offers:
             offer.property_id.state = 'offer_received'

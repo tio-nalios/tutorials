@@ -79,6 +79,11 @@ class EstateProperty(models.Model):
             self.garden_area = 10
             self.garden_orientation = 'north'
 
+    @api.ondelete(at_uninstall=False)
+    def _ondelete_check_state(self):
+        if any(record.state not in ['new', 'cancelled'] for record in self):
+            raise UserError('You can only delete properties that are new or cancelled.')
+
     def action_sold(self):
         for record in self:
             if record.state != 'offer_accepted':
