@@ -91,3 +91,12 @@ class EstateProperty(models.Model):
                 raise UserError('Sold properties cannot be cancelled.')
             record.state = 'cancelled'
         return True
+    
+    _check_expected_price = models.Constraint(
+        'CHECK(expected_price > 0)',
+        'The expected price must be strictly positive.'
+    )
+    _check_selling_price = models.Constraint(
+        'CHECK(selling_price >= 0)',
+        'The selling price cannot be negative.'
+    )
