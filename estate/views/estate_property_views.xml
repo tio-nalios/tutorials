@@ -33,6 +33,7 @@
                         <h1>
                             <field name="name" placeholder="Property Name"/>
                         </h1>
+                        <field name="tag_ids" widget="many2many_tags"/>
                     </div>
 
                     <group>

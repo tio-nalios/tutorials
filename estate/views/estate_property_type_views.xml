@@ -1,5 +1,15 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <odoo>
+	<record id="estate_property_type_view_search" model="ir.ui.view">
+		<field name="name">estate.property.type.search</field>
+		<field name="model">estate.property.type</field>
+		<field name="arch" type="xml">
+			<search string="Property Types">
+				<field name="name"/>
+			</search>
+		</field>
+	</record>
+
 	<record id="estate_property_type_action" model="ir.actions.act_window">
 		<field name="name">Property Types</field>
 		<field name="res_model">estate.property.type</field>
@@ -30,16 +40,6 @@
 					</div>
 				</sheet>
 			</form>
-		</field>
-	</record>
-
-	<record id="estate_property_type_view_search" model="ir.ui.view">
-		<field name="name">estate.property.type.search</field>
-		<field name="model">estate.property.type</field>
-		<field name="arch" type="xml">
-			<search string="Property Types">
-				<field name="name"/>
-			</search>
 		</field>
 	</record>
 </odoo>
