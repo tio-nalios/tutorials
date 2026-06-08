@@ -1,4 +1,4 @@
-from odoo import fields, models
+from odoo import api, fields, models
 from datetime import timedelta
 
 class EstateProperty(models.Model):
@@ -53,3 +53,10 @@ class EstateProperty(models.Model):
     )
     tag_ids = fields.Many2many('estate.property.tag', string='Tags')
     offer_ids = fields.One2many('estate.property.offer', 'property_id', copy=False)
+
+    best_price = fields.Float(compute='_compute_best_price', string='Best Offer')
+
+    @api.depends('offer_ids.price')
+    def _compute_best_price(self):
+        for record in self:
+            record.best_price = max(record.mapped('offer_ids.price') or [0])
