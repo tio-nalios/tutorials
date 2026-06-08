@@ -29,15 +29,16 @@
         <field name="arch" type="xml">
             <form string="New Property">
                 <header>
-                    <button name="action_sold" string="Sold" type="object"/>
-                    <button name="action_cancel" string="Cancel" type="object"/>
+                    <button name="action_sold" string="Sold" type="object" decoration-primary="state == 'offer_accepted'" invisible="state == 'sold' or state == 'cancelled'"/>
+                    <button name="action_cancel" string="Cancel" type="object" invisible="state == 'sold' or state == 'cancelled'"/>
+                    <field name="state" widget="statusbar" statusbar_visible="new,offer_received,offer_accepted,sold,cancelled"/>
                 </header>
                 <sheet>
                     <div class="oe_title">
                         <h1>
                             <field name="name" placeholder="Property Name"/>
                         </h1>
-                        <field name="tag_ids" widget="many2many_tags"/>
+                        <field name="tag_ids" widget="many2many_tags" options="{'color_field': 'color'}"/>
                     </div>
 
                     <group>
