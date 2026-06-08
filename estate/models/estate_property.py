@@ -1,6 +1,6 @@
 from odoo import api, fields, models
 from datetime import timedelta
-from odoo.exceptions import UserError
+from odoo.exceptions import UserError, ValidationError
 
 class EstateProperty(models.Model):
     _name = 'estate.property'
@@ -96,7 +96,13 @@ class EstateProperty(models.Model):
         'CHECK(expected_price > 0)',
         'The expected price must be strictly positive.'
     )
+    # Not necessary anymore because selling_price can already not be lower than 90% of expected_price but I'm leaving it as an example
     _check_selling_price = models.Constraint(
         'CHECK(selling_price >= 0)',
         'The selling price cannot be negative.'
     )
+    @api.constrains('selling_price', 'expected_price')
+    def _check_selling_price(self):
+        for record in self:
+            if record.selling_price and record.selling_price < 0.9 * record.expected_price:
+                raise ValidationError('The selling price cannot be lower than 90% of the expected price.')
