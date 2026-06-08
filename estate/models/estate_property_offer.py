@@ -35,6 +35,14 @@ class EstatePropertyOffer(models.Model):
             else:
                 offer.validity = 0
 
+    # Set the state of the property to "offer_received" when an offer is created
+    @api.model_create_multi
+    def create(self, vals_list):
+        offers = super().create(vals_list)
+        for offer in offers:
+            offer.property_id.state = 'offer_received'
+        return offers
+
     def action_accept(self):
         for offer in self:
             offer.status = 'accepted'
