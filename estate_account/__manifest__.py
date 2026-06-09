@@ -1,7 +1,7 @@
 {
     'name': 'Real Estate Invoicing',
     'category': 'Sales/Real Estate',
-    'installable': False,
+    'installable': True,
     'application': False,
     'author': 'Tim Olde',
     'license': 'LGPL-3',
