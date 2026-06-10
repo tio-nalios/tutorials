@@ -8,6 +8,8 @@
                 <Counter/><Counter/>
             </div>
         </div>
+        <Card title="'card 1'" content="this.text1"/>
+        <Card title="'card 2'" content="this.text2"/>
     </t>
 
 </templates>
