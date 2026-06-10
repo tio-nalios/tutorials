@@ -9,5 +9,10 @@ export class Playground extends Component {
     setup() {
         this.text1 = "This is the content for card 1.";
         this.text2 = markup("<div class='text-success'>This is the content for card 2.</div>");
+        this.sum = useState({ value: 0 });
+    }
+
+    incrementSum = () => {
+        this.sum.value++;
     }
 }
